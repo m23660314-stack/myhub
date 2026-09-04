@@ -25,10 +25,10 @@ local maintab = {
 	
 }
 
-local Section = maintab:AddSection("Player Settings")
+local Section = maintab.Main:AddSection("Player Settings")
 
 
-local Slider = maintab:AddSlider("Slider", 
+local Slider = maintab.Main:AddSlider("Slider", 
 	{
 		Title = "Walkspeed ",
 		Description = "Change your walkspeed",
