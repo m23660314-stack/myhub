@@ -1,42 +1,70 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Fluent = loadstring(game:HttpGet(
+	"https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"
+	))()
 
+local Camera = workspace.CurrentCamera
+local Viewport = Camera.ViewportSize
 
+-- Smaller window on phones
+local WindowWidth = math.min(430, Viewport.X - 20)
+local WindowHeight = math.min(350, Viewport.Y - 80)
 
 local Window = Fluent:CreateWindow({
 	Title = "MHKZ Hub " .. Fluent.Version,
 	SubTitle = "by MHKZ",
-	TabWidth = 160,
-	Size = UDim2.fromOffset(580, 460),
-	Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+	TabWidth = 120,
+
+	-- SMALLER WINDOW
+	Size = UDim2.fromOffset(WindowWidth, WindowHeight),
+
+	Acrylic = true,
 	Theme = "Dark",
-	MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+
+	-- PC keyboard minimize
+	MinimizeKey = Enum.KeyCode.LeftControl
 })
 
-Fluent:Notify({
-	Title = "Notification",
-	Content = "You Execute a script !", 
-	SubContent = "by MHKZ", -- Optional
-	Duration = 3 -- Set to nil to make the notification not disappear
-})
 
--- Fluent provides Lucide Icons, they are optional
-local maintab = {
-	Main = Window:AddTab({ Title = "Player", Icon = nil }),
-	
-}
+--==================================================
+-- 📱 MOBILE FLOATING LOGO
+--==================================================
 
-local Section = maintab.Main:AddSection("Player Settings")
+local Player = game.Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local MobileGui = Instance.new("ScreenGui")
+MobileGui.Name = "MobileHubButton"
+MobileGui.ResetOnSpawn = false
+MobileGui.DisplayOrder = 999999
+MobileGui.Parent = PlayerGui
 
 
-local Slider = maintab.Main:AddSlider("Slider", 
-	{
-		Title = "Walkspeed ",
-		Description = "Change your walkspeed",
-		Default = 16,
-		Min = 0,
-		Max = 500,
-		Rounding = 1,
-		Callback = function(Value)
-			game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-		end
-	})
+local LogoButton = Instance.new("TextButton")
+LogoButton.Name = "HubLogo"
+LogoButton.Size = UDim2.fromOffset(55, 55)
+LogoButton.Position = UDim2.new(1, -75, 1, -100)
+LogoButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+LogoButton.Text = "M"
+LogoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LogoButton.TextSize = 24
+LogoButton.Font = Enum.Font.GothamBold
+LogoButton.AutoButtonColor = true
+LogoButton.Parent = MobileGui
+
+-- Make it ROUND
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(1, 0)
+Corner.Parent = LogoButton
+
+
+--==================================================
+-- 📱 SHOW / HIDE WINDOW
+--==================================================
+
+local WindowVisible = true
+
+LogoButton.Activated:Connect(function()
+	WindowVisible = not WindowVisible
+
+	Window.Root.Visible = WindowVisible
+end)
