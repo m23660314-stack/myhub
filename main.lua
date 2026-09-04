@@ -42,14 +42,18 @@ MobileGui.Parent = PlayerGui
 local LogoButton = Instance.new("TextButton")
 LogoButton.Name = "HubLogo"
 LogoButton.Size = UDim2.fromOffset(55, 55)
-LogoButton.Position = UDim2.new(1, -75, 1, -100)
-LogoButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+LogoButton.Position = UDim2.new(0.287, 0,0.121, 0)
+LogoButton.BackgroundColor3 = Color3.fromRGB(44, 255, 20)
 LogoButton.Text = "M"
-LogoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LogoButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 LogoButton.TextSize = 24
 LogoButton.Font = Enum.Font.GothamBold
 LogoButton.AutoButtonColor = true
 LogoButton.Parent = MobileGui
+
+local drag = Instance.new("UIDragDetector")
+drag.Parent = LogoButton
+
 
 -- Make it ROUND
 local Corner = Instance.new("UICorner")
