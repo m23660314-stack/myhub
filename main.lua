@@ -124,3 +124,26 @@ UserInputService.InputChanged:Connect(function(input)
 		)
 	end
 end)
+
+Window.Root.Destroying:Connect(function()
+	if LogoButton then
+		LogoButton:Destroy()
+	end
+
+	if MobileGui then
+		MobileGui:Destroy()
+	end
+end)
+
+
+
+---tabs--------
+
+
+-- Fluent provides Lucide Icons, they are optional
+local Tabs = {
+	player = Window:AddTab({ Title = "Player", Icon = nil }),
+	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+
