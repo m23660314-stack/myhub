@@ -159,6 +159,14 @@ local Input = Tabs.player:AddInput("Input", {
 	end
 })
 
+Tabs.player:AddButton({
+	Title = "Update walkspeed",
+	Description = "Click this to update walkspeed",
+	Callback = function()
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Input:GetValue()
+	end
+})
+
 
 local Input = Tabs.player:AddInput("Input", {
 	Title = "Jumpower",
