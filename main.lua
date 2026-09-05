@@ -2,6 +2,66 @@ local Fluent = loadstring(game:HttpGet(
 	"https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"
 	))()
 
+
+local SaveManager = loadstring(game:HttpGet(
+	"https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"
+	))()
+
+
+
+local CorrectKey = "MHKZ Script123"
+
+local KeyWindow = Fluent:CreateWindow({
+	Title = "MHKZ Hub - Key System",
+	SubTitle = "Key daxl ka",
+	TabWidth = 160,
+	Size = UDim2.fromOffset(450, 300),
+	Acrylic = true,
+	Theme = "Dark",
+	MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local KeyTab = KeyWindow:AddTab({
+	Title = "Key",
+	Icon = "key"
+})
+
+local KeyInput = KeyTab:AddInput("KeyInput", {
+	Title = "Key Daxl ka",
+	Default = "",
+	Placeholder = "Key Daxl ka vere....",
+	Numeric = false,
+	Finished = false,
+})
+
+KeyTab:AddButton({
+	Title = "Checking Key",
+	Callback = function()
+		if KeyInput.Value == CorrectKey then
+			Fluent:Notify({
+				Title = "MHKZ Hub",
+				Content = "Key ye ta drsta! 🔓",
+				Duration = 3
+			})
+
+			KeyWindow:Destroy()
+
+			-- CREATE YOUR MAIN HUB HERE
+
+		else
+			Fluent:Notify({
+				Title = "MHKZ Hub",
+				Content = "key xalata! ❌",
+				Duration = 3
+			})
+		end
+	end
+})
+
+
+
+
+
 local Camera = workspace.CurrentCamera
 local Viewport = Camera.ViewportSize
 
@@ -152,7 +212,7 @@ Tabs.player:AddParagraph({
 	Content = nil
 })
 
-local Input = Tabs.player:AddInput("Input", {
+local Input = Tabs.player:AddInput("WalkSpeed", {
 	Title = "Walkspeed",
 	Description = "Walkspeed",
 	Default = "16",
@@ -166,7 +226,7 @@ local Input = Tabs.player:AddInput("Input", {
 
 
 
-local Input = Tabs.player:AddInput("Input", {
+local Input = Tabs.player:AddInput("JumpPower", {
 	Title = "Jumpower",
 	Description = "Jumpower",
 	Default = "32",
@@ -194,7 +254,7 @@ Tabs.player:AddButton({
 local noclip = false
 local runservice = game:GetService("RunService")
 
-local Toggle = Tabs.player:AddToggle("MyToggle", 
+local Toggle = Tabs.player:AddToggle("NoClip", 
 	{
 		Title = "Dnav diwara bche", 
 		Description = "Noclip",
@@ -223,7 +283,7 @@ end)
 
 
 
-local Slider = Tabs.player:AddSlider("Slider", 
+local Slider = Tabs.player:AddSlider("FOV", 
 	{
 		Title = "Pov",
 		Description = "POV badl ka",
@@ -242,7 +302,7 @@ local Slider = Tabs.player:AddSlider("Slider",
 
 
 Tabs.teleport:AddParagraph({
-	Title = "De blocke dayne o de che blocke teleport and bfre ye an .....",
+	Title = "De blocke dayne o de che blocke",
 	Content = nil
 })
 
@@ -405,7 +465,7 @@ Tabs.teleport:AddButton({
 	end
 })
 
-local Toggle = Tabs.teleport:AddToggle("MyToggle", 
+local Toggle = Tabs.teleport:AddToggle("BotBlock2", 
 	{
 		Title = "Bot e blocke 2", 
 		Description = "Player e ta wak bot bcht blocke 2",
@@ -465,9 +525,21 @@ ThemeDropdown:OnChanged(function(Value)
 	Fluent:SetTheme(Value)
 end)
 
-
-
 ThemeDropdown:OnChange(function(Value)
 	Fluent:SetTheme(Value)
 end)
 
+
+
+
+
+
+Tabs.Settings:AddParagraph({
+	Title = "Save ka script ",
+	Content = "tshtet ta nachn sarepeva "
+})
+
+SaveManager:SetLibrary(Fluent)
+SaveManager:SetIgnoreIndexes({})
+SaveManager:SetFolder("MHKZ Hub")
+SaveManager:BuildConfigSection(Tabs.Settings)
