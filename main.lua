@@ -198,7 +198,7 @@ local Toggle = Tabs.player:AddToggle("MyToggle",
 	{
 		Title = "Dnav diwara bche", 
 		Description = "Noclip",
-		Default = false
+		Default = false,
 		Callback = function(state)
 			noclip = state
 		end 
@@ -409,7 +409,7 @@ local Toggle = Tabs.teleport:AddToggle("MyToggle",
 	{
 		Title = "Bot e blocke 2", 
 		Description = "Player e ta wak bot bcht blocke 2",
-		Default = false
+		Default = false,
 		Callback = function(state)
 			local bot1 = state
 			if bot1 == true then
