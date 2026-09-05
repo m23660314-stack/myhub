@@ -143,13 +143,18 @@ end)
 -- Fluent provides Lucide Icons, they are optional
 local Tabs = {
 	player = Window:AddTab({ Title = "Player", Icon = nil }),
+	teleport = Window:AddTab({ Title = "Teleport", Icon = nil }),
 	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
+Tabs.player:AddParagraph({
+	Title = "tshten player e ta yel vere",
+	Content = nil
+})
 
 local Input = Tabs.player:AddInput("Input", {
 	Title = "Walkspeed",
-	Description = "Change walkspeed",
+	Description = "Walkspeed",
 	Default = "16",
 	Placeholder = "Placeholder",
 	Numeric = true, -- Only allows numbers
@@ -159,18 +164,11 @@ local Input = Tabs.player:AddInput("Input", {
 	end
 })
 
-Tabs.player:AddButton({
-	Title = "Update walkspeed",
-	Description = "Click this to update walkspeed",
-	Callback = function()
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Input.Callback()
-	end
-})
 
 
 local Input = Tabs.player:AddInput("Input", {
 	Title = "Jumpower",
-	Description = "Change jumpower",
+	Description = "Jumpower",
 	Default = "32",
 	Placeholder = "Placeholder",
 	Numeric = true, -- Only allows numbers
@@ -179,6 +177,268 @@ local Input = Tabs.player:AddInput("Input", {
 		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
 	end
 })
+
+Tabs.player:AddParagraph({
+	Title = "Xoin",
+	Content = nil
+})
+
+Tabs.player:AddButton({
+	Title = "Xwa koshtn",
+	Description = "MADE BY MHKZ",
+	Callback = function()
+		game.Players.LocalPlayer.Character.Humanoid.Health = 0
+	end
+})
+
+local noclip = false
+local runservice = game:GetService("RunService")
+
+local Toggle = Tabs.player:AddToggle("MyToggle", 
+	{
+		Title = "Dnav diwara bche", 
+		Description = "Noclip",
+		Default = false
+		Callback = function(state)
+			noclip = state
+		end 
+	})
+
+
+runservice.Stepped:Connect(function()
+	if noclip then
+		local char = game.Players.LocalPlayer.Character
+
+		if char then
+			for _, part in ipairs(char:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.CanCollide = not noclip
+				end
+
+			end
+		end
+	end
+end)
+
+
+
+
+local Slider = Tabs.player:AddSlider("Slider", 
+	{
+		Title = "Pov",
+		Description = "POV badl ka",
+		Default = 70,
+		Min = 0,
+		Max = 120,
+		Rounding = 1,
+		Callback = function(Value)
+			game.Workspace.CurrentCamera.FieldOfView = Value
+		end
+	})
+
+
+
+--teleport tabb----------
+
+
+Tabs.teleport:AddParagraph({
+	Title = "De blocke dayne o de che blocke teleport and bfre ye an .....",
+	Content = nil
+})
+
+
+
+
+
+
+--parta 1-------------
+local partama = Instance.new("Part")
+partama.Parent = workspace
+partama.Anchored = true
+partama.CanCollide = false
+partama.BrickColor = BrickColor.new("Lime green")
+
+
+
+
+
+Tabs.teleport:AddButton({
+	Title = "Blocke dayna",
+	Description = "Blocke spawn ka nk xwa !",
+	Callback = function()
+		partama.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+	end
+})
+
+
+
+Tabs.teleport:AddButton({
+	Title = "Teleport be blocke",
+	Description = "To bche nk blocke b teleporte",
+	Callback = function()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Position = partama.Position
+	end
+})
+
+
+Tabs.teleport:AddButton({
+	Title = "Shashak de bo teleporte",
+	Description = "Shashak de bo bkar ina na teleport ",
+	Callback = function()
+		local Players = game:GetService("Players")
+
+		local player = Players.LocalPlayer
+		local playerGui = player:WaitForChild("PlayerGui")
+
+		-- ScreenGui
+		local gui = Instance.new("ScreenGui")
+		gui.Name = "TeleportGui"
+		gui.ResetOnSpawn = false
+		gui.Parent = playerGui
+
+		-- Main window
+		local frame = Instance.new("Frame")
+		frame.Size = UDim2.new(0, 217, 0, 126)
+		frame.Position = UDim2.new(0.5, -108, 0.5, -63)
+		frame.BackgroundColor3 = Color3.fromRGB(130, 130, 130)
+		frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		frame.BorderSizePixel = 1
+		frame.Parent = gui
+
+		-- Top bar
+		local topBar = Instance.new("Frame")
+		topBar.Size = UDim2.new(1, 0, 0, 29)
+		topBar.Position = UDim2.new(0, 0, 0, 0)
+		topBar.BackgroundColor3 = Color3.fromRGB(190, 190, 190)
+		topBar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		topBar.BorderSizePixel = 1
+		topBar.Parent = frame
+
+		-- Drag detector
+		local move = Instance.new("UIDragDetector")
+		move.Parent = frame
+
+		-- X button
+		local closeButton = Instance.new("TextButton")
+		closeButton.Size = UDim2.new(0, 37,0, 24)
+		closeButton.Position = UDim2.new(1, -40,0, 2)
+		closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+		closeButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		closeButton.BorderSizePixel = 1
+		closeButton.Text = "X"
+		closeButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+		closeButton.TextSize = 24
+		closeButton.Font = Enum.Font.GothamBold
+		closeButton.Parent = frame
+
+		-- Teleport button
+		local teleportButton = Instance.new("TextButton")
+		teleportButton.Size = UDim2.new(0, 184, 0, 40)
+		teleportButton.Position = UDim2.new(0.5, -92, 0, 48)
+		teleportButton.BackgroundColor3 = Color3.fromRGB(55, 205, 20)
+		teleportButton.BorderSizePixel = 0
+		teleportButton.Text = "Teleport"
+		teleportButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+		teleportButton.TextSize = 32
+		teleportButton.Font = Enum.Font.GothamBold
+		teleportButton.Parent = frame
+
+		-- Rounded corners
+		local corner = Instance.new("UICorner")
+		corner.CornerRadius = UDim.new(0, 10)
+		corner.Parent = teleportButton
+
+		-- Close GUI
+		closeButton.MouseButton1Click:Connect(function()
+			gui:Destroy()
+		end)
+
+		-- Teleport
+		teleportButton.MouseButton1Click:Connect(function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.Position = partama.Position
+		end)
+	end
+})
+
+
+
+
+local tweenService = game:GetService("TweenService")
+local tweenInfo = TweenInfo.new(4)
+
+Tabs.teleport:AddButton({
+	Title = "Bfre nk blocke ",
+	Description = "Bfre nk blocke na teleport",
+	Callback = function()
+		local goal = {
+
+			Position = partama.Position
+
+		}
+		local tween = tweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,tweenInfo,goal)
+
+		tween:Play()
+	end
+})
+
+
+Tabs.teleport:AddParagraph({
+	Title = "Bot",
+	Content = nil
+})
+
+
+
+-- parta 2--------
+local parta2 = Instance.new("Part")
+parta2.Parent = workspace
+parta2.Anchored = true
+parta2.CanCollide = false
+parta2.BrickColor = BrickColor.new("Really blue")
+
+
+Tabs.teleport:AddButton({
+	Title = "Blocke 2 spawn ka ",
+	Description = "Blocke 2 spawn ka nk player xwa",
+	Callback = function()
+		parta2.Position = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position
+	end
+})
+
+local Toggle = Tabs.teleport:AddToggle("MyToggle", 
+	{
+		Title = "Bot e blocke 2", 
+		Description = "Player e ta wak bot bcht blocke 2",
+		Default = false
+		Callback = function(state)
+			local bot1 = state
+			if bot1 == true then
+				local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+				local character = game.Players.LocalPlayer.Character
+
+
+				if character and humanoid then
+					humanoid:MoveTo(parta2.Position)
+
+				end
+
+
+
+
+
+			end
+		end 
+	})
+
+
+
+
+
+
+
+
+
+
 
 
 --==================================================
