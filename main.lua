@@ -146,4 +146,6 @@ local Tabs = {
 	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
+Tabs.player:Select()
 
+Fluent:SetTheme("Aqua")
