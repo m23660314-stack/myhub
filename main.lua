@@ -149,7 +149,7 @@ local Tabs = {
 
 local Input = Tabs.player:AddInput("Input", {
 	Title = "Walkspeed",
-	Description = "Change your walkspeed",
+	Description = "Change walkspeed",
 	Default = "16",
 	Placeholder = "Placeholder",
 	Numeric = true, -- Only allows numbers
@@ -163,14 +163,14 @@ Tabs.player:AddButton({
 	Title = "Update walkspeed",
 	Description = "Click this to update walkspeed",
 	Callback = function()
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Input:GetValue()
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Input.Callback()
 	end
 })
 
 
 local Input = Tabs.player:AddInput("Input", {
 	Title = "Jumpower",
-	Description = "Change your jumpower",
+	Description = "Change jumpower",
 	Default = "32",
 	Placeholder = "Placeholder",
 	Numeric = true, -- Only allows numbers
