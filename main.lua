@@ -146,6 +146,60 @@ local Tabs = {
 	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
-Tabs.player:Select()
 
-Fluent:SetTheme("Aqua")
+local Input = Tabs.player:AddInput("Input", {
+	Title = "Walkspeed",
+	Description = "Change your walkspeed",
+	Default = "16",
+	Placeholder = "Placeholder",
+	Numeric = true, -- Only allows numbers
+	Finished = false, -- Only calls callback when you press enter
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end
+})
+
+
+local Input = Tabs.player:AddInput("Input", {
+	Title = "Jumpower",
+	Description = "Change your jumpower",
+	Default = "32",
+	Placeholder = "Placeholder",
+	Numeric = true, -- Only allows numbers
+	Finished = false, -- Only calls callback when you press enter
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+	end
+})
+
+
+--==================================================
+-- 🎨 THEME DROPDOWN
+--==================================================
+
+local ThemeNames = {}
+
+for _, ThemeName in pairs(Fluent.Themes) do
+	table.insert(ThemeNames, ThemeName)
+end
+
+local ThemeDropdown = Tabs.Settings:AddDropdown("ThemeDropdown", {
+	Title = "Themes",
+	Description = "Changes themes",
+	Values = ThemeNames,
+	Multi = false,
+	Default = Fluent.Theme,
+})
+
+ThemeDropdown:OnChanged(function(Value)
+	print("Selected theme:", Value)
+
+	Fluent:SetTheme(Value)
+end)
+
+
+
+ThemeDropdown:OnChange(function(Value)
+	Fluent:SetTheme(Value)
+end)
+
